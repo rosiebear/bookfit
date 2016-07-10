@@ -1,5 +1,5 @@
 {
-  "name": "duckr",
+  "name": "Bookfit",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,10 +7,12 @@
     "start": "webpack-dev-server",
     "production": "webpack -p",
     "lint": "eslint app/.; exit 0",
-    "fix": "eslint --fix app/.; exit 0"
+    "fix": "eslint --fix app/.; exit 0",
+    "test": "NODE_PATH=./app mocha --require mock-css-modules test/.setup.js test/**/*-test.js",
+    "test:watch": "npm run test -- --watch"
   },
   "keywords": [],
-  "author": "Tyler McGinnis <tylermcginnis33@gmail.com> (http://tylermcginnis.com)",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "firebase": "^3.0.5",
@@ -32,13 +34,19 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.5.0",
     "css-loader": "^0.23.1",
+    "enzyme": "^2.4.1",
     "eslint": "^2.8.0",
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-react": "^4.3.0",
     "eslint-plugin-standard": "^1.3.2",
     "html-webpack-plugin": "^2.15.0",
+    "mocha": "^2.5.3",
+    "mock-css-modules": "^1.0.0",
+    "react-addons-test-utils": "^15.2.1",
+    "sinon": "^1.17.4",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"

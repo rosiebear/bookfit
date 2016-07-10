@@ -2,12 +2,12 @@ import { fetchUser } from 'helpers/api'
 import auth, { logout, saveUser } from 'helpers/auth'
 import { formatUserInfo } from 'helpers/utils'
 
-const AUTH_USER = 'AUTH_USER'
-const UNAUTH_USER = 'UNAUTH_USER'
-const FETCHING_USER = 'FETCHING_USER'
-const FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE'
-const FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS'
-const REMOVE_FETCHING_USER = 'REMOVE_FETCHING_USER'
+export const AUTH_USER = 'AUTH_USER'
+export const UNAUTH_USER = 'UNAUTH_USER'
+export const FETCHING_USER = 'FETCHING_USER'
+export const FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE'
+export const FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS'
+export const REMOVE_FETCHING_USER = 'REMOVE_FETCHING_USER'
 
 export function authUser (uid) {
   return {
@@ -106,7 +106,7 @@ const initialState = {
   isFetching: true,
   error: '',
   isAuthed: false,
-  authedId: ''
+  authedId: '',
 }
 
 export default function users (state = initialState, action) {
