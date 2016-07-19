@@ -8,6 +8,16 @@ export function formatUserInfo (name, avatar, uid) {
   }
 }
 
+export function formatStudio (text, {name, avatar, uid}) {
+  return {
+    text,
+    name,
+    avatar,
+    uid,
+    timestamp: Date.now()
+  }
+}
+
 export function formatDuck (text, {name, avatar, uid}) {
   return {
     text,

@@ -1,5 +1,36 @@
 import { ref } from 'config/constants'
 
+function saveToStudios (studio) {
+  const studioId = ref.child('studios').push().key
+  const studioPromise = ref.child(`studios/${studioId}`).set({...studio, studioId})
+
+  return {
+    studioId,
+    studioPromise
+  }
+}
+
+function saveToUsersStudios (studio, studioId) {
+  return ref.child(`usersStudios/${studio.uid}/${studioId}`)
+    .set({...studio, studioId})
+}
+
+export function saveStudio (studio) {
+  const { studioId, studioPromise } = saveToStudios(studio)
+
+  return Promise.all([
+    studioPromise,
+    saveToUsersStudios(studio, studioId),
+  ]).then(() => ({...studio, studioId}))
+}
+
+export function fetchUsersStudios (uid) {
+  return ref.child(`usersStudios/${uid}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
+}
+
+//DUCK STUFF
+
 function saveToDucks (duck) {
   const duckId = ref.child('ducks').push().key
   const duckPromise = ref.child(`ducks/${duckId}`).set({...duck, duckId})

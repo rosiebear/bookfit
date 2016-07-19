@@ -4,37 +4,70 @@
     uid
     avatar
 
-/ducks
-  duckId
-    avatar
-    duckId
-    name
-    text
-    timestamp
+/studios
+  studioId
     uid
+    name
+    description
+    tags
+    location
+    photos
 
-/likeCount
-  duckId
+    scheduleId
+      sessions
+        sessionId
+        datetime
+        name
+        trainer
 
-/usersDucks
-  uid
-    duckId
-      avatar
-      duckId
-      name
-      text
-      timestamp
+        bookings
+          bookingsId
+          sessionId
+          clientId
+
+    users
       uid
-
-/replies
-  duckId
-    replyId
       name
-      comment
-      uid
-      timestamp
       avatar
+      bio
+      trainingTypes
+      userRoles
 
-/usersLikes
+  clients
+    uid
+    name
+    avatar
+
+/usersStudios
   uid
-    duckid
+    studioId
+      name
+      description
+      tags
+      location
+      photos
+
+      scheduleId
+        sessions
+          sessionId
+            datetime
+            name
+            trainer
+            bookings
+              bookingsId
+              sessionId
+              clientId
+      users
+        uid
+        name
+        avatar
+        bio
+        sessionTypes
+        userRoles
+
+      clients
+        uid
+        name
+        avatar
+
+
