@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux'
 import { Navigation } from 'components'
 import { connect } from 'react-redux'
 import { container, innerContainer } from './styles.css'
-import * as usersLikesActionCreators from 'redux/modules/usersLikes'
 import * as userActionCreators from 'redux/modules/users'
 import { formatUserInfo } from 'helpers/utils'
 import { firebaseAuth } from 'config/constants'
@@ -11,7 +10,6 @@ import { firebaseAuth } from 'config/constants'
 const MainContainer = React.createClass({
   propTypes: {
     isAuthed: PropTypes.bool.isRequired,
-    setUsersLikes: PropTypes.func.isRequired,
     authUser: PropTypes.func.isRequired,
     fetchingUserSuccess: PropTypes.func.isRequired,
     removeFetchingUser: PropTypes.func.isRequired,
@@ -26,9 +24,8 @@ const MainContainer = React.createClass({
         const userInfo = formatUserInfo(userData.displayName, userData.photoURL, user.uid)
         this.props.authUser(user.uid)
         this.props.fetchingUserSuccess(user.uid, userInfo, Date.now())
-        this.props.setUsersLikes()
         if (this.props.location.pathname === '/') {
-          this.context.router.replace('feed')
+          this.context.router.replace('userstudios')
         }
       } else {
         this.props.removeFetchingUser()
@@ -50,7 +47,6 @@ const MainContainer = React.createClass({
 export default connect(
   ({users}) => ({isAuthed: users.isAuthed, isFetching: users.isFetching}),
   (dispatch) => bindActionCreators({
-    ...usersLikesActionCreators,
     ...userActionCreators,
   }, dispatch)
 )(MainContainer)

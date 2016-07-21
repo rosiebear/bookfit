@@ -25,12 +25,12 @@
           sessionId
           clientId
 
-    users
+    trainers
       uid
       name
       avatar
       bio
-      trainingTypes
+      skills
       userRoles
 
   clients
@@ -57,17 +57,24 @@
               bookingsId
               sessionId
               clientId
-      users
+
+      trainers
         uid
         name
         avatar
         bio
-        sessionTypes
+        skills
         userRoles
 
       clients
         uid
         name
         avatar
+
+/bookings
+  scheduleId
+    sessionId
+    bookingsId
+    clientId
 
 

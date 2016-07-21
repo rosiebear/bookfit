@@ -25,7 +25,7 @@ function checkAuth (nextState, replace) {
   const nextPathName = nextState.location.pathname
   if (nextPathName === '/' || nextPathName === '/auth') {
     if (isAuthed === true) {
-      replace('/feed')
+      replace('/userstudios')
     }
   } else {
     if (isAuthed !== true) {
