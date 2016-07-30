@@ -3,9 +3,9 @@ import { Router, IndexRoute, Route } from 'react-router'
 import { MainContainer, HomeContainer, AuthenticateContainer, StudioContainer,
   LogoutContainer, UserContainer, UsersStudiosContainer } from 'containers'
 
-export default function getRoutes (checkAuth, history) {
+export default function getRoutes (checkAuth, browserHistory) {
   return (
-    <Router history={history}>
+    <Router history={browserHistory}>
       <Router path='/' component={MainContainer}>
         <Route path='auth' component={AuthenticateContainer} onEnter={checkAuth} />
         <Route path='studio' component={StudioContainer} onEnter={checkAuth} />

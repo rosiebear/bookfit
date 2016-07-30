@@ -7,14 +7,14 @@ import thunk from 'redux-thunk'
 import { checkIfAuthed } from 'helpers/auth'
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
 import * as reducers from 'redux/modules'
-import { hashHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 
 const store = createStore(combineReducers({...reducers, routing: routerReducer}), compose(
   applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ))
 
-const history = syncHistoryWithStore(hashHistory, store)
+const history = syncHistoryWithStore(browserHistory, store)
 
 function checkAuth (nextState, replace) {
   if (store.getState().users.isFetching === true) {
