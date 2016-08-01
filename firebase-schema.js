@@ -13,31 +13,6 @@
     location
     photos
 
-    scheduleId
-      sessions
-        sessionId
-        datetime
-        name
-        trainer
-
-        bookings
-          bookingsId
-          sessionId
-          clientId
-
-    trainers
-      uid
-      name
-      avatar
-      bio
-      skills
-      userRoles
-
-  clients
-    uid
-    name
-    avatar
-
 /usersStudios
   uid
     studioId
@@ -47,34 +22,43 @@
       location
       photos
 
-      scheduleId
-        sessions
-          sessionId
-            datetime
-            name
-            trainer
-            bookings
-              bookingsId
-              sessionId
-              clientId
+/studioSchedules
+  studioId
+    scheduleId
+      uid (of owner)
 
-      trainers
-        uid
-        name
-        avatar
-        bio
-        skills
-        userRoles
-
-      clients
-        uid
-        name
-        avatar
-
-/bookings
+/scheduleSessions
   scheduleId
     sessionId
+      uid
+      datetime
+      name
+      trainer
+      bookings
+      bookingsId
+      sessionId
+      clientId
+
+/bookings
+  sessionId
+    scheduleId
     bookingsId
     clientId
 
+/teams
+  studioId
+    uid
+      name
+      avatar
+      bio
+      skills
+      userRoles
 
+clients
+  studioId
+    uid
+      name
+      avatar
+      bio
+      skills
+      userRoles

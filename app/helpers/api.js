@@ -1,5 +1,15 @@
 import { ref } from 'config/constants'
 
+// save user to teams
+//  teams
+//    studioId
+//      uid
+
+// add schedule to studioSchedules
+//  studioSchedules
+//    studioId
+//      scheduleId
+
 function saveToStudios (studio) {
   const studioId = ref.child('studios').push().key
   const studioPromise = ref.child(`studios/${studioId}`).set({...studio, studioId})
@@ -15,12 +25,19 @@ function saveToUsersStudios (studio, studioId) {
     .set({...studio, studioId})
 }
 
-export function saveStudio (studio) {
+function saveUserToStudiosTeams (user, studioId) {
+  return ref.child(`studiosTeams/${studioId}/${user.uid}/`)
+    .set({...user, studioId})
+}
+
+export function saveStudio (studio, user) {
   const { studioId, studioPromise } = saveToStudios(studio)
 
   return Promise.all([
     studioPromise,
     saveToUsersStudios(studio, studioId),
+    saveUserToStudiosTeams(user, studioId),
+    // save studio and schedule to studioSchedules
   ]).then(() => ({...studio, studioId}))
 }
 

@@ -41,10 +41,10 @@ function fetchingStudiosError (error) {
   }
 }
 
-export function addAndHandleStudio (studio) {
+export function addAndHandleStudio (studio, user) {
   return function (dispatch, getState) {
     const uid = getState().users.authedId
-    saveStudio(studio)
+    saveStudio(studio, user)
       .then((studioWithId) => {
         dispatch(addStudio(uid, studioWithId.studioId))
       })

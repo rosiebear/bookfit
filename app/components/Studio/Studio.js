@@ -13,7 +13,7 @@ export default function Studio (props) {
     if (Studio.ref.value.length === 0) {
       return
     }
-    props.addAndHandleStudio(formatStudio(Studio.ref.value, props.user))
+    props.addAndHandleStudio(formatStudio(Studio.ref.value, props.user), props.user)
     Studio.ref.value = ''
   }
 
