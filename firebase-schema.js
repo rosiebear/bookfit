@@ -22,10 +22,28 @@
       location
       photos
 
+/studioSessionTypes
+  studioId
+    name
+    duration
+    spaces
+    description
+    team
+      uid
+
+/studioRates
+  studioId
+    ratesId
+      sessionTypeId
+        name
+        description
+      price
+      numberOfSessions
+        
 /studioSchedules
   studioId
     scheduleId
-      uid (of owner)
+    uid (of owner)
 
 /scheduleSessions
   scheduleId
@@ -54,7 +72,7 @@
       skills
       userRoles
 
-clients
+/clients
   studioId
     uid
       name

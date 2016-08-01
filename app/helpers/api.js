@@ -30,6 +30,12 @@ function saveUserToStudiosTeams (user, studioId) {
     .set({...user, studioId})
 }
 
+function saveToStudiosSchedules (user, studioId) {
+  const scheduleId = ref.child(`studiosSchedules/${studioId}`).push().key
+  const scheduleWithId = {uid: user.uid, scheduleId}
+  return ref.child(`studiosSchedules/${studioId}/${scheduleId}`).set(scheduleWithId)
+}
+
 export function saveStudio (studio, user) {
   const { studioId, studioPromise } = saveToStudios(studio)
 
@@ -37,7 +43,7 @@ export function saveStudio (studio, user) {
     studioPromise,
     saveToUsersStudios(studio, studioId),
     saveUserToStudiosTeams(user, studioId),
-    // save studio and schedule to studioSchedules
+    saveToStudiosSchedules(user, studioId),
   ]).then(() => ({...studio, studioId}))
 }
 
@@ -47,7 +53,6 @@ export function fetchUsersStudios (uid) {
 }
 
 //DUCK STUFF
-
 function saveToDucks (duck) {
   const duckId = ref.child('ducks').push().key
   const duckPromise = ref.child(`ducks/${duckId}`).set({...duck, duckId})
