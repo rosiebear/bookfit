@@ -1,21 +1,6 @@
 import React, { PropTypes } from 'react'
 import { formatTimestamp } from 'helpers/utils'
-
-Studio.propTypes = {
-  studio: PropTypes.object.isRequired,
-}
-
-function Studio ({studio}) {
-  return (
-    <div>
-      <div>
-        <div>{studio.name}</div>
-        <div>{studio.text}</div>
-        <div>{formatTimestamp(studio.timestamp)}</div>
-      </div>
-    </div>
-  )
-}
+import { StudioContainer } from 'containers'
 
 UsersStudios.propTypes = {
   isFetching: PropTypes.bool.isRequired,
@@ -24,6 +9,7 @@ UsersStudios.propTypes = {
 }
 
 export default function UsersStudios ({studios, isFetching, error}) {
+  console.log(studios)
   const studioIds = Object.keys(studios)
   return (
     <div>
@@ -33,7 +19,7 @@ export default function UsersStudios ({studios, isFetching, error}) {
         : <div>
         <h1>{'Studios'}</h1>
         {studioIds.map((studioId) => (
-          <Studio key={studioId} studio={studios[studioId]} />
+          <StudioContainer key={studioId} studio={studios[studioId]} />
         ))}
       </div>}
       {studioIds.length === 0 && isFetching === false ? <h3>{'Add your fitness studio. 😎'}</h3> : null}

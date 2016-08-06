@@ -18,7 +18,7 @@ function NavLinks ({isAuthed}) {
 function ActionLinks ({isAuthed}) {
   return isAuthed === true
     ? <ul>
-        <li><Link className={link} to='/studio'>{'Add Studio'}</Link></li>
+        <li><Link className={link} to='/studionew'>{'Add Studio'}</Link></li>
         <li><Link className={link} to='/userstudios'>{'Studios'}</Link></li>
         <li><Link className={link} to='/logout'>{'Logout'}</Link></li>
       </ul>

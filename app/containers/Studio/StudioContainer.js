@@ -1,19 +1,26 @@
-import { bindActionCreators } from 'redux'
+import React, { PropTypes } from 'react'
 import { Studio } from 'components'
-import { connect } from 'react-redux'
-import { addAndHandleStudio } from 'redux/modules/usersStudios'
+const { func, object } = PropTypes
 
-function mapStateToProps ({users}) {
-  return {
-    user: users[users.authedId] ? users[users.authedId].info : {},
-  }
-}
+const StudioContainer = React.createClass({
+  propTypes: {
+    studio: object.isRequired,
+    handleClick: func,
+  },
+  contextTypes: {
+    router: PropTypes.object.isRequired,
+  },
+  handleClick (e) {
+    e.preventDefault()
+    this.context.router.push('/sessiontypes/' + this.props.studio.studioId)
+  },
+  render () {
+    return (
+      <Studio
+        handleClick={this.handleClick}
+        studio={this.props.studio} />
+    )
+  },
+})
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({addAndHandleStudio}, dispatch)
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Studio)
+export default StudioContainer

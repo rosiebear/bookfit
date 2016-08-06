@@ -52,6 +52,24 @@ export function fetchUsersStudios (uid) {
     .then((snapshot) => snapshot.val() || {})
 }
 
+export function postSessionType (studioId, sessionType) {
+  console.log(studioId)
+  console.log(sessionType)
+  const sessionId = ref.child(`sessionTypes/${studioId}`).push().key
+  const sessionTypeWithId = {...sessionType, sessionId}
+  const sessionTypePromise = ref.child(`sessionTypes/${studioId}/${sessionId}`).set(sessionTypeWithId)
+
+  return {
+    sessionTypeWithId,
+    sessionTypePromise,
+  }
+}
+
+export function fetchSessionTypes (studioId) {
+  return ref.child(`sessionTypes/${studioId}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
+}
+
 //DUCK STUFF
 function saveToDucks (duck) {
   const duckId = ref.child('ducks').push().key

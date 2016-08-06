@@ -1,35 +1,20 @@
 import React, { PropTypes } from 'react'
-import { formatStudio } from 'helpers/utils'
+import { formatTimestamp } from 'helpers/utils'
+const { func, object } = PropTypes
 
-const { object, func } = PropTypes
-Studio.PropTypes = {
-  user: object.isRequired,
-  addAndHandleStudio: func.isRequired,
-}
-
-export default function Studio (props) {
-
-  function submitStudio () {
-    if (Studio.ref.value.length === 0) {
-      return
-    }
-    props.addAndHandleStudio(formatStudio(Studio.ref.value, props.user), props.user)
-    Studio.ref.value = ''
-  }
-
-  return (
-    <div>
-      {'Add Studio'}
-        <div>
-          <input
-            ref={(ref) => Studio.ref = ref}
-            type='text'
-            placeholder="Studio Name" />
-        </div>
-        <button
-          onClick={submitStudio}>
-            {'Save Studio'}
-        </button>
+const Studio = ({studio, handleClick}) => (
+  <div>
+    <div onClick={handleClick}>
+      {studio.name}
     </div>
-  )
+    <div>{studio.text}</div>
+    <div>{formatTimestamp(studio.timestamp)}</div>
+  </div>
+)
+
+Studio.propTypes = {
+  studio: object.isRequired,
+  handleClick: func,
 }
+
+export default Studio

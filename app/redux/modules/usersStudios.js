@@ -71,7 +71,7 @@ const initialUsersStudioState = {
   studios: {},
 }
 
-export default function usersStudio (state = initialUsersStudioState, action) {
+export default function usersStudios (state = initialUsersStudioState, action) {
   switch (action.type) {
     case ADD_STUDIO :
       return {
