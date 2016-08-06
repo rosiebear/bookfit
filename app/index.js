@@ -6,10 +6,11 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { checkIfAuthed } from 'helpers/auth'
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
+import {reducer as formReducer} from 'redux-form'
 import * as reducers from 'redux/modules'
 import { hashHistory } from 'react-router'
 
-const store = createStore(combineReducers({...reducers, routing: routerReducer}), compose(
+const store = createStore(combineReducers({...reducers, routing: routerReducer, form: formReducer}), compose(
   applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ))
