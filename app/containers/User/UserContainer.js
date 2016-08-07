@@ -17,6 +17,7 @@ const UserContainer = React.createClass({
     fetchAndHandleUser: PropTypes.func.isRequired,
     lastUpdatedUser: PropTypes.number.isRequired,
     lastUpdatedDucks: PropTypes.number.isRequired,
+    routeParams: PropTypes.object,
   },
   componentDidMount () {
     const uid = this.props.routeParams.uid
@@ -58,7 +59,7 @@ function mapStateToProps ({users, usersDucks}, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     ...usersActionCreators,
-    ...usersDucksActionCreators
+    ...usersDucksActionCreators,
   }, dispatch)
 }
 

@@ -14,17 +14,17 @@ export function formatStudio (text, {name, avatar, uid}) {
     name,
     avatar,
     uid,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   }
 }
 
-export function formatSessionType (text, {name, avatar, uid}) {
+export function formatSessionType (values, {name, uid}, studioId) {
   return {
-    text,
+    ...values,
     name,
-    avatar,
     uid,
-    timestamp: Date.now()
+    studioId,
+    timestamp: Date.now(),
   }
 }
 
@@ -34,7 +34,7 @@ export function formatDuck (text, {name, avatar, uid}) {
     name,
     avatar,
     uid,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   }
 }
 
@@ -65,6 +65,6 @@ export function formatReply ({name, uid, avatar}, reply) {
     reply,
     uid,
     avatar,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   }
 }

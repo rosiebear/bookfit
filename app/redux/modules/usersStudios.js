@@ -90,7 +90,7 @@ export default function usersStudios (state = initialUsersStudioState, action) {
         ...state,
         lastUpdated: action.lastUpdated,
         studios: action.studios,
-        isFetching: false
+        isFetching: false,
       }
     case ADD_STUDIO_ERROR :
       return {

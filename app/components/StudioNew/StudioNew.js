@@ -8,7 +8,6 @@ StudioNew.PropTypes = {
 }
 
 export default function StudioNew (props) {
-
   function submitStudio () {
     if (StudioNew.ref.value.length === 0) {
       return
@@ -24,7 +23,7 @@ export default function StudioNew (props) {
           <input
             ref={(ref) => StudioNew.ref = ref}
             type='text'
-            placeholder="Studio Name" />
+            placeholder='Studio Name' />
         </div>
         <button
           onClick={submitStudio}>

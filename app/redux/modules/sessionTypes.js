@@ -1,4 +1,5 @@
 import { postSessionType } from 'helpers/api'
+import { formatSessionType } from 'helpers/utils'
 
 const FETCHING_SESSION_TYPES = 'FETCHING_SESSION_TYPES'
 const FETCHING_SESSION_TYPES_ERROR = 'FETCHING_SESSION_TYPES_ERROR'
@@ -52,10 +53,12 @@ function fetchingSessionTypesSuccess (studioId, sessionTypes) {
   }
 }
 
-export function addAndHandleSessionType (studioId, sessionType) {
-  return function (dispatch) {
-    const { sessionTypeWithId, sessionTypePromise } = postSessionType(studioId, sessionType)
-    console.log(sessionTypeWithId)
+export function addAndHandleSessionType (sessionType, studioId) {
+  return function (dispatch, getState) {
+    const authedId = getState().users.authedId
+    const userInfo = getState().users[authedId].info
+    const formattedSessionType = formatSessionType(sessionType, userInfo, studioId)
+    const { sessionTypeWithId, sessionTypePromise } = postSessionType(studioId, formattedSessionType)
     dispatch(addSessionType(studioId, sessionTypeWithId))
     sessionTypePromise.catch((error) => {
       dispatch(removeSessionType(studioId, sessionTypeWithId.sessionType.Id))
@@ -117,6 +120,12 @@ function sessionTypesAndLastUpated (state = initialStudioState, action) {
 const initialState = {
   isFetching: true,
   error: '',
+  data: {
+    title: 'Test session type',
+    spaces: 10,
+    description: 'Test description',
+    duration: 60,
+  },
 }
 
 export default function sessionTypes (state = initialState, action) {

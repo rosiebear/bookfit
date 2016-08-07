@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { formatTimestamp } from 'helpers/utils'
 import { StudioContainer } from 'containers'
 
 UsersStudios.propTypes = {
@@ -9,7 +8,6 @@ UsersStudios.propTypes = {
 }
 
 export default function UsersStudios ({studios, isFetching, error}) {
-  console.log(studios)
   const studioIds = Object.keys(studios)
   return (
     <div>

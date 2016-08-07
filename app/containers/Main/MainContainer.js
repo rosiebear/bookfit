@@ -10,6 +10,9 @@ import { firebaseAuth } from 'config/constants'
 const MainContainer = React.createClass({
   propTypes: {
     isAuthed: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired,
+    children: PropTypes.object.isRequired,
     authUser: PropTypes.func.isRequired,
     fetchingUserSuccess: PropTypes.func.isRequired,
     removeFetchingUser: PropTypes.func.isRequired,

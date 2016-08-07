@@ -31,7 +31,7 @@ function fetchingUser () {
 function fetchingUserFailure (error) {
   return {
     type: FETCHING_USER_FAILURE,
-    error: 'Error fetching user.',
+    error: `Error fetching user ${error}.`,
   }
 }
 
@@ -76,7 +76,7 @@ export function logoutAndUnauth () {
 
 export function removeFetchingUser () {
   return {
-    type: REMOVE_FETCHING_USER
+    type: REMOVE_FETCHING_USER,
   }
 }
 
@@ -86,7 +86,7 @@ const initialUserState = {
     name: '',
     uid: '',
     avatar: '',
-  }
+  },
 }
 
 function user (state = initialUserState, action) {
@@ -150,7 +150,7 @@ export default function users (state = initialState, action) {
           ...state,
           isFetching: false,
           error: '',
-          [action.uid]: user(state[action.uid], action)
+          [action.uid]: user(state[action.uid], action),
         }
     default :
       return state

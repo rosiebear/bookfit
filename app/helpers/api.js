@@ -16,7 +16,7 @@ function saveToStudios (studio) {
 
   return {
     studioId,
-    studioPromise
+    studioPromise,
   }
 }
 
@@ -53,11 +53,9 @@ export function fetchUsersStudios (uid) {
 }
 
 export function postSessionType (studioId, sessionType) {
-  console.log(studioId)
-  console.log(sessionType)
-  const sessionId = ref.child(`sessionTypes/${studioId}`).push().key
-  const sessionTypeWithId = {...sessionType, sessionId}
-  const sessionTypePromise = ref.child(`sessionTypes/${studioId}/${sessionId}`).set(sessionTypeWithId)
+  const sessionTypeId = ref.child(`sessionTypes/${studioId}`).push().key
+  const sessionTypeWithId = {...sessionType, sessionTypeId}
+  const sessionTypePromise = ref.child(`sessionTypes/${studioId}/${sessionTypeId}`).set(sessionTypeWithId)
 
   return {
     sessionTypeWithId,
@@ -70,14 +68,14 @@ export function fetchSessionTypes (studioId) {
     .then((snapshot) => snapshot.val() || {})
 }
 
-//DUCK STUFF
+// DUCK STUFF
 function saveToDucks (duck) {
   const duckId = ref.child('ducks').push().key
   const duckPromise = ref.child(`ducks/${duckId}`).set({...duck, duckId})
 
   return {
     duckId,
-    duckPromise
+    duckPromise,
   }
 }
 
@@ -103,7 +101,7 @@ export function saveDuck (duck) {
 export function listenToFeed (cb, errorCB) {
   ref.child('ducks').on('value', (snapshot) => {
     const feed = snapshot.val() || {}
-    const sortedIds = Object.keys(feed).sort((a,b) => {
+    const sortedIds = Object.keys(feed).sort((a, b) => {
       return feed[b].timestamp - feed[a].timestamp
     })
     cb({feed, sortedIds})

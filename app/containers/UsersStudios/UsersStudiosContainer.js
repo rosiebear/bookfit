@@ -24,7 +24,6 @@ const UsersStudiosContainer = React.createClass({
 })
 
 function mapStateToProps ({usersStudios, users}) {
-  console.log(usersStudios.studios)
   return {
     studios: usersStudios.studios,
     isFetching: usersStudios.isFetching,
