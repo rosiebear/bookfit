@@ -12,7 +12,7 @@ export default function StudioNew (props) {
     if (StudioNew.ref.value.length === 0) {
       return
     }
-    props.addAndHandleStudio(formatStudio(StudioNew.ref.value, props.user), props.user)
+    props.studioFanout(formatStudio(StudioNew.ref.value, props.user), props.user)
     StudioNew.ref.value = ''
   }
 

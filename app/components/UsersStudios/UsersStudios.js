@@ -4,11 +4,10 @@ import { StudioContainer } from 'containers'
 UsersStudios.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  studios: PropTypes.object,
+  studioIds: PropTypes.array,
 }
 
-export default function UsersStudios ({studios, isFetching, error}) {
-  const studioIds = Object.keys(studios)
+export default function UsersStudios ({studioIds, isFetching, error}) {
   return (
     <div>
       {error ? <h3>{error}</h3> : null}
@@ -16,8 +15,8 @@ export default function UsersStudios ({studios, isFetching, error}) {
         ? <p>{'Fetching Studios'}</p>
         : <div>
         <h1>{'Studios'}</h1>
-        {studioIds.map((studioId) => (
-          <StudioContainer key={studioId} studio={studios[studioId]} />
+        {studioIds.map((id) => (
+          <StudioContainer key={id} studioId={id} />
         ))}
       </div>}
       {studioIds.length === 0 && isFetching === false ? <h3>{'Add your fitness studio. 😎'}</h3> : null}

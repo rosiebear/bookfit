@@ -1,16 +1,16 @@
-import { postSessionType } from 'helpers/api'
+import { postSessionType, fetchSessionTypes } from 'helpers/api'
 import { formatSessionType } from 'helpers/utils'
 
-const FETCHING_SESSION_TYPES = 'FETCHING_SESSION_TYPES'
-const FETCHING_SESSION_TYPES_ERROR = 'FETCHING_SESSION_TYPES_ERROR'
-const FETCHING_SESSION_TYPES_SUCCESS = 'FETCHING_SESSION_TYPES_SUCCESS'
-const ADD_SESSION_TYPE = 'ADD_SESSION_TYPE'
-const ADD_SESSION_TYPE_ERROR = 'ADD_SESSION_TYPE_ERROR'
-const REMOVE_SESSION_TYPE = 'REMOVE_SESSION_TYPE'
+const FETCHING_STUDIO_TYPES = 'FETCHING_STUDIO_TYPES'
+const FETCHING_STUDIO_TYPES_ERROR = 'FETCHING_STUDIO_TYPES_ERROR'
+const FETCHING_STUDIO_TYPES_SUCCESS = 'FETCHING_STUDIO_TYPES_SUCCESS'
+const ADD_STUDIO_TYPE = 'ADD_STUDIO_TYPE'
+const ADD_STUDIO_TYPE_ERROR = 'ADD_STUDIO_TYPE_ERROR'
+const REMOVE_STUDIO_TYPE = 'REMOVE_STUDIO_TYPE'
 
 function addSessionType (studioId, sessionType) {
   return {
-    type: ADD_SESSION_TYPE,
+    type: ADD_STUDIO_TYPE,
     studioId,
     sessionType,
   }
@@ -19,34 +19,35 @@ function addSessionType (studioId, sessionType) {
 function addSessionTypeError (error) {
   console.warn(error)
   return {
-    type: ADD_SESSION_TYPE_ERROR,
+    type: ADD_STUDIO_TYPE_ERROR,
     error: 'Error adding sessionType',
   }
 }
 
-function removeSessionType (studioId, sessionTypeId) {
+function removeSessionType (sessionTypeId) {
   return {
-    type: REMOVE_SESSION_TYPE,
+    type: REMOVE_STUDIO_TYPE,
     sessionTypeId,
   }
 }
 
 function fetchingSessionTypes () {
   return {
-    type: FETCHING_SESSION_TYPES,
+    type: FETCHING_STUDIO_TYPES,
   }
 }
 
 function fetchingSessionTypesError (error) {
+  console.warn(error)
   return {
-    type: FETCHING_SESSION_TYPES_ERROR,
-    error: `Error fetching sessionTypes ${error}`,
+    type: FETCHING_STUDIO_TYPES_ERROR,
+    error: 'Error fetching sessionTypes',
   }
 }
 
 function fetchingSessionTypesSuccess (studioId, sessionTypes) {
   return {
-    type: FETCHING_SESSION_TYPES_SUCCESS,
+    type: FETCHING_STUDIO_TYPES_SUCCESS,
     sessionTypes,
     studioId,
     lastUpdated: Date.now(),
@@ -59,11 +60,22 @@ export function addAndHandleSessionType (sessionType, studioId) {
     const userInfo = getState().users[authedId].info
     const formattedSessionType = formatSessionType(sessionType, userInfo, studioId)
     const { sessionTypeWithId, sessionTypePromise } = postSessionType(studioId, formattedSessionType)
+
     dispatch(addSessionType(studioId, sessionTypeWithId))
     sessionTypePromise.catch((error) => {
-      dispatch(removeSessionType(studioId, sessionTypeWithId.sessionType.Id))
+      dispatch(removeSessionType(studioId, sessionTypeWithId.sessionTypeId))
       dispatch(addSessionTypeError(error))
     })
+  }
+}
+
+export function fetchAndHandleSessionTypes (studioId) {
+  return function (dispatch, getState) {
+    dispatch(fetchingSessionTypes())
+
+    fetchSessionTypes(studioId)
+      .then((sessionTypes) => dispatch(fetchingSessionTypesSuccess(studioId, sessionTypes, Date.now())))
+      .catch((error) => dispatch(fetchingSessionTypesError(error)))
   }
 }
 
@@ -78,12 +90,12 @@ const initialSessionType = {
 
 function studioSessionTypes (state = initialSessionType, action) {
   switch (action.type) {
-    case ADD_SESSION_TYPE :
+    case ADD_STUDIO_TYPE :
       return {
         ...state,
         [action.sessionType.sessionTypeId]: action.sessionType,
       }
-    case REMOVE_SESSION_TYPE :
+    case REMOVE_STUDIO_TYPE :
       return {
         ...state,
         [action.sessionType.sessionTypeId]: undefined,
@@ -93,21 +105,21 @@ function studioSessionTypes (state = initialSessionType, action) {
   }
 }
 
-const initialStudioState = {
+const initialDuckState = {
   lastUpdated: Date.now(),
   sessionTypes: {},
 }
 
-function sessionTypesAndLastUpated (state = initialStudioState, action) {
+function sessionTypesAndLastUpated (state = initialDuckState, action) {
   switch (action.type) {
-    case FETCHING_SESSION_TYPES_SUCCESS :
+    case FETCHING_STUDIO_TYPES_SUCCESS :
       return {
         ...state,
         lastUpdated: action.lastUpdated,
         sessionTypes: action.sessionTypes,
       }
-    case ADD_SESSION_TYPE :
-    case REMOVE_SESSION_TYPE :
+    case ADD_STUDIO_TYPE :
+    case REMOVE_STUDIO_TYPE :
       return {
         ...state,
         sessionTypes: studioSessionTypes(state.sessionTypes, action),
@@ -120,31 +132,25 @@ function sessionTypesAndLastUpated (state = initialStudioState, action) {
 const initialState = {
   isFetching: true,
   error: '',
-  data: {
-    title: 'Test session type',
-    spaces: 10,
-    description: 'Test description',
-    duration: 60,
-  },
 }
 
 export default function sessionTypes (state = initialState, action) {
   switch (action.type) {
-    case FETCHING_SESSION_TYPES :
+    case FETCHING_STUDIO_TYPES :
       return {
         ...state,
         isFetching: true,
       }
-    case FETCHING_SESSION_TYPES_ERROR :
-    case ADD_SESSION_TYPE_ERROR :
+    case FETCHING_STUDIO_TYPES_ERROR :
+    case ADD_STUDIO_TYPE_ERROR :
       return {
         ...state,
         isFetching: false,
         error: action.error,
       }
-    case ADD_SESSION_TYPE :
-    case FETCHING_SESSION_TYPES_SUCCESS :
-    case REMOVE_SESSION_TYPE :
+    case ADD_STUDIO_TYPE :
+    case FETCHING_STUDIO_TYPES_SUCCESS :
+    case REMOVE_STUDIO_TYPE :
       return {
         ...state,
         isFetching: false,

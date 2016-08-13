@@ -1,102 +1,113 @@
-import { saveStudio, fetchUsersStudios } from 'helpers/api'
+import { fetchUsersStudios } from 'helpers/api'
+import { addMultipleStudios } from 'redux/modules/studios'
 
-const ADD_STUDIO = 'ADD_STUDIO'
-const ADD_STUDIO_ERROR = 'ADD_STUDIO'
-const FETCHING_STUDIOS = 'FETCHING_STUDIOS'
-const FETCHING_STUDIOS_SUCCESS = 'FETCHING_STUDIOS_SUCCESS'
-const FETCHING_STUDIOS_ERROR = 'FETCHING_STUDIOS_ERROR'
+const FETCHING_USERS_STUDIOS = 'FETCHING_USERS_STUDIOS'
+const FETCHING_USERS_STUDIOS_ERROR = 'FETCHING_USERS_STUDIOS_ERROR'
+const FETCHING_USERS_STUDIOS_SUCCESS = 'FETCHING_USERS_STUDIOS_SUCCESS'
+const ADD_SINGLE_USERS_STUDIO = 'ADD_SINGLE_USERS_STUDIO'
 
-function addStudio (studio) {
+function fetchingUsersStudios (uid) {
   return {
-    type: ADD_STUDIO,
-    studio,
+    type: FETCHING_USERS_STUDIOS,
+    uid,
   }
 }
 
-function addStudioError (error) {
+function fetchingUsersStudiosError (error) {
+  console.warn(error)
   return {
-    type: ADD_STUDIO_ERROR,
-    error: `Error adding reply ${error}`,
+    type: FETCHING_USERS_STUDIOS_ERROR,
+    error: 'Error fetching Users Studio Ids' + error,
   }
 }
 
-function fetchingStudios () {
+function fetchingUsersStudiosSuccess (uid, studioIds, lastUpdated) {
   return {
-    type: FETCHING_STUDIOS,
+    type: FETCHING_USERS_STUDIOS_SUCCESS,
+    uid,
+    studioIds,
+    lastUpdated,
   }
 }
 
-function fetchingStudiosSuccess (studios) {
+export function addSingleUsersStudio (uid, studioId) {
   return {
-    type: FETCHING_STUDIOS_SUCCESS,
-    studios,
-    lastUpdated: Date.now(),
-  }
-}
-
-function fetchingStudiosError (error) {
-  return {
-    type: FETCHING_STUDIOS_ERROR,
-    error: `Fetching studios ${error}`,
-  }
-}
-
-export function addAndHandleStudio (studio, user) {
-  return function (dispatch, getState) {
-    const uid = getState().users.authedId
-    saveStudio(studio, user)
-      .then((studioWithId) => {
-        dispatch(addStudio(uid, studioWithId.studioId))
-      })
-      .catch((err) => {
-        dispatch(addStudioError(err))
-      })
-  }
-}
-
-export function fetchAndHandleStudios () {
-  return function (dispatch, getState) {
-    const uid = getState().users.authedId
-    dispatch(fetchingStudios())
-
-    fetchUsersStudios(uid)
-      .then((studios) => dispatch(fetchingStudiosSuccess(studios)))
-      .catch((error) => dispatch(fetchingStudiosError(error)))
+    type: ADD_SINGLE_USERS_STUDIO,
+    uid,
+    studioId,
   }
 }
 
 const initialUsersStudioState = {
-  isFetching: true,
-  error: '',
-  studios: {},
+  lastUpdated: 0,
+  studioIds: [],
 }
 
-export default function usersStudios (state = initialUsersStudioState, action) {
+function usersStudio (state = initialUsersStudioState, action) {
   switch (action.type) {
-    case ADD_STUDIO :
+    case ADD_SINGLE_USERS_STUDIO :
       return {
         ...state,
-        error: '',
-        isFetching: false,
-        [action.studio.studioId]: action.studio,
+        studioIds: state.studioIds.concat([action.studioId]),
       }
-    case FETCHING_STUDIOS :
+    default :
+      return state
+  }
+}
+
+export function fetchAndHandleUsersStudios (uid) {
+  return function (dispatch, getState) {
+    dispatch(fetchingUsersStudios())
+
+    fetchUsersStudios(uid)
+      .then((studios) => dispatch(addMultipleStudios(studios)))
+      .then(({studios}) => dispatch(
+        fetchingUsersStudiosSuccess(
+          uid,
+          Object.keys(studios).sort((a, b) => studios[b].timestamp - studios[a].timestamp),
+          Date.now())
+        )
+      )
+      .catch((error) => dispatch(fetchingUsersStudiosError(error)))
+  }
+}
+
+const initialState = {
+  isFetching: true,
+  error: '',
+}
+
+export default function usersStudios (state = initialState, action) {
+  switch (action.type) {
+    case FETCHING_USERS_STUDIOS :
       return {
         ...state,
         isFetching: true,
       }
-    case FETCHING_STUDIOS_SUCCESS :
-      return {
-        ...state,
-        lastUpdated: action.lastUpdated,
-        studios: action.studios,
-        isFetching: false,
-      }
-    case ADD_STUDIO_ERROR :
+    case FETCHING_USERS_STUDIOS_ERROR :
       return {
         ...state,
         isFetching: false,
         error: action.error,
+      }
+    case FETCHING_USERS_STUDIOS_SUCCESS :
+      return {
+        ...state,
+        isFetching: false,
+        error: '',
+        [action.uid]: {
+          lastUpdated: action.lastUpdated,
+          studioIds: action.studioIds,
+        },
+      }
+    case ADD_SINGLE_USERS_STUDIO :
+      return typeof state[action.uid] === 'undefined'
+        ? state
+        : {
+        ...state,
+        isFetching: false,
+        error: '',
+        [action.uid]: usersStudio(state[action.uid], action),
       }
     default :
       return state

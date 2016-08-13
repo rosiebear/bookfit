@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { Studio } from 'components'
 const { func, object } = PropTypes
 
@@ -23,4 +24,12 @@ const StudioContainer = React.createClass({
   },
 })
 
-export default StudioContainer
+function mapStateToProps ({studios}, props) {
+  return {
+    studio: studios[props.studioId],
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(StudioContainer)

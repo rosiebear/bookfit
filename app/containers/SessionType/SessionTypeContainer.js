@@ -6,7 +6,7 @@ import { addAndHandleSessionType } from 'redux/modules/sessionTypes'
 function mapStateToProps ({sessionTypes}, props) {
   return {
     studioId: props.routeParams.studioId,
-    initialValues: sessionTypes.data,
+    //: sessionTypes.data,
   }
 }
 
@@ -16,6 +16,6 @@ function mapDispatchToProps (dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(SessionType)
 

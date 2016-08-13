@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { StudioNew } from 'components'
 import { connect } from 'react-redux'
-import { addAndHandleStudio } from 'redux/modules/usersStudios'
+import { studioFanout } from 'redux/modules/studios'
 
 function mapStateToProps ({users}) {
   return {
@@ -10,10 +10,10 @@ function mapStateToProps ({users}) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({addAndHandleStudio}, dispatch)
+  return bindActionCreators({studioFanout}, dispatch)
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(StudioNew)
