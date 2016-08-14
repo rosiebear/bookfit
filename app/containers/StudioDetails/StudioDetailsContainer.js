@@ -32,10 +32,10 @@ const StudioDetailsContainer = React.createClass({
 
 function mapStateToProps ({studios}, props) {
   return {
-    isFetching: studios.get('isFetching'),
-    error: studios.get('error'),
+    isFetching: studios.isFetching,
+    error: studios.error,
     studioId: props.routeParams.studioId,
-    studioAlreadyFetched: !!studios.get(props.routeParams.studioId),
+    studioAlreadyFetched: !!studios[props.routeParams.studioId],
   }
 }
 

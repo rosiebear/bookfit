@@ -28,7 +28,7 @@ const MainContainer = React.createClass({
         this.props.authUser(user.uid)
         this.props.fetchingUserSuccess(user.uid, userInfo, Date.now())
         if (this.props.location.pathname === '/') {
-          this.context.router.replace('userstudios')
+          this.context.router.replace(`userstudios/${user.uid}`)
         }
       } else {
         this.props.removeFetchingUser()
@@ -39,7 +39,7 @@ const MainContainer = React.createClass({
     return this.props.isFetching === true
       ? null
       : <div className={container}>
-          <Navigation isAuthed={this.props.isAuthed} />
+          <Navigation uid={this.props.uid} isAuthed={this.props.isAuthed} />
           <div className={innerContainer}>
             {this.props.children}
           </div>
@@ -48,7 +48,7 @@ const MainContainer = React.createClass({
 })
 
 export default connect(
-  ({users}) => ({isAuthed: users.isAuthed, isFetching: users.isFetching}),
+  ({users}) => ({isAuthed: users.isAuthed, isFetching: users.isFetching, uid: users.authedId}),
   (dispatch) => bindActionCreators({
     ...userActionCreators,
   }, dispatch)

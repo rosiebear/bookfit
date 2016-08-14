@@ -13,7 +13,7 @@ const StudioContainer = React.createClass({
   },
   handleClick (e) {
     e.preventDefault()
-    this.context.router.push('/sessiontypes/' + this.props.studio.studioId)
+    this.context.router.push('/studio-detail/' + this.props.studio.studioId)
   },
   render () {
     return (

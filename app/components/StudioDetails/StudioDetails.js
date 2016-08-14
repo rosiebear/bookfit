@@ -13,11 +13,8 @@ export default function StudioDetails ({studioId, isFetching, error}) {
       {isFetching === true
         ? <p>{'Fetching'}</p>
         : <div>
-        <div>
-          <StudioContainer studioId={studioId} />
-        </div>
-
-      </div>}
+            <StudioContainer studioId={studioId} />
+          </div>}
       {error ? <p>{error}</p> : null}
     </div>
   )

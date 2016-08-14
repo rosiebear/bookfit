@@ -24,14 +24,14 @@ const UsersStudiosContainer = React.createClass({
   },
 })
 
-function mapStateToProps ({users, usersStudios}) {
-  const specificUsersStudios = usersStudios[users.authedId]
+function mapStateToProps ({users, usersStudios}, props) {
+  const specificUsersStudios = usersStudios[props.routeParams.uid]
   return {
     studioIds: specificUsersStudios ? specificUsersStudios.studioIds : [],
     isFetching: usersStudios.isFetching,
     error: usersStudios.error,
     user: users[users.authedId] ? users[users.authedId].info : {},
-    uid: users.authedId,
+    uid: props.routeParams.uid,
   }
 }
 

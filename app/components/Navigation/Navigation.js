@@ -14,11 +14,11 @@ function NavLinks ({isAuthed}) {
     : null
 }
 
-function ActionLinks ({isAuthed}) {
+function ActionLinks ({isAuthed, uid}) {
   return isAuthed === true
     ? <ul>
         <li><Link className={link} to='/studionew'>{'Add Studio'}</Link></li>
-        <li><Link className={link} to='/userstudios'>{'Studios'}</Link></li>
+        <li><Link className={link} to={`/userstudios/${uid}`}>{'Studios'}</Link></li>
         <li><Link className={link} to='/logout'>{'Logout'}</Link></li>
       </ul>
     : <ul>
@@ -27,12 +27,12 @@ function ActionLinks ({isAuthed}) {
       </ul>
 }
 
-export default function Navigation ({isAuthed}) {
+export default function Navigation ({isAuthed, uid}) {
   return (
     <div className={container}>
       <nav className={navContainer}>
         <NavLinks isAuthed={isAuthed}/>
-        <ActionLinks isAuthed={isAuthed}/>
+        <ActionLinks isAuthed={isAuthed} uid={uid} />
       </nav>
     </div>
   )
