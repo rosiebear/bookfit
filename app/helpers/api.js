@@ -64,6 +64,7 @@ export function postSessionType (studioId, sessionType) {
 }
 
 export function fetchSessionTypes (studioId) {
+  console.log(studioId)
   return ref.child(`sessionTypes/${studioId}`).once('value')
     .then((snapshot) => snapshot.val() || {})
 }

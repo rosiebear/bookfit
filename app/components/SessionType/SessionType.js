@@ -25,7 +25,6 @@ const SessionType = (props, context) => {
   const { handleSubmit, submitting } = props
   const onSubmit = (values) => {
     props.addAndHandleSessionType(values, props.studioId)
-    context.router.push('/')
   }
   return (
     <div className='col-xs-12 col-sm-8 col-sm-offset-2 main-content'>

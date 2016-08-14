@@ -3,27 +3,28 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { SessionTypes } from 'components'
 import { staleSessionTypes } from 'helpers/utils'
-import * as SessionTypesActionCreators from 'redux/modules/SessionTypes'
+import * as sessionTypesActionCreators from 'redux/modules/sessionTypes'
 
 const SessionTypesContainer = React.createClass({
   propTypes: {
     isFetching: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     lastUpdated: PropTypes.number.isRequired,
-    SessionTypes: PropTypes.object,
+    sessionTypes: PropTypes.object,
     studioId: PropTypes.string.isRequired,
     fetchAndHandleSessionTypes: PropTypes.func.isRequired,
   },
   getDefaultProps () {
     return {
       lastUpdated: 0,
-      SessionTypes: {},
+      sessionTypes: {},
     }
   },
   componentDidMount () {
-    if (staleSessionTypes(this.props.lastUpdated)) {
+    console.log(this.props.lastUpdated)
+    //if (staleSessionTypes(this.props.lastUpdated)) {
       this.props.fetchAndHandleSessionTypes(this.props.studioId)
-    }
+    //}
   },
   render () {
     return (
@@ -31,24 +32,23 @@ const SessionTypesContainer = React.createClass({
         isFetching={this.props.isFetching}
         error={this.props.error}
         lastUpdated={this.props.lastUpdated}
-        SessionTypes={this.props.SessionTypes} />
+        sessionTypes={this.props.sessionTypes} />
     )
   },
 })
 
 function mapStateToProps (state, props) {
-  const studioSessionTypesInfo = state.SessionTypes[props.studioId] || {}
-  const { lastUpdated, SessionTypes } = duckSessionTypesInfo
+  const studioSessionTypesInfo = state.sessionTypes[props.studioId] || {}
+  const { lastUpdated, sessionTypes } = studioSessionTypesInfo
   return {
-    studioId: props.routeParams.studioId,
-    isFetching: state.SessionTypes.isFetching,
-    error: state.SessionTypes.error,
+    isFetching: state.sessionTypes.isFetching,
+    error: state.sessionTypes.error,
     lastUpdated,
-    SessionTypes,
+    sessionTypes,
   }
 }
 
 export default connect(
   mapStateToProps,
-  (dispatch) => bindActionCreators(SessionTypesActionCreators, dispatch)
+  (dispatch) => bindActionCreators(sessionTypesActionCreators, dispatch)
 )(SessionTypesContainer)

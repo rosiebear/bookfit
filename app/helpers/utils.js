@@ -1,4 +1,4 @@
-import { usersDucksExpirationLength, userExpirationLength, repliesExpirationLength } from 'config/constants'
+import { usersDucksExpirationLength, userExpirationLength, sessionTypesExpirationLength } from 'config/constants'
 
 export function formatUserInfo (name, avatar, uid) {
   return {
@@ -55,8 +55,8 @@ export function staleUser (timestamp) {
   return getMilliseconds(timestamp) > userExpirationLength
 }
 
-export function staleReplies (timestamp) {
-  return getMilliseconds(timestamp) > repliesExpirationLength
+export function staleSessionTypes (timestamp) {
+  return getMilliseconds(timestamp) > sessionTypesExpirationLength
 }
 
 export function formatReply ({name, uid, avatar}, reply) {
