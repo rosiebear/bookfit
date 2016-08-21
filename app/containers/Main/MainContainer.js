@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
-import { Navigation } from 'components'
+import { Navigation, Header } from 'components'
 import { connect } from 'react-redux'
 import { container, innerContainer } from './styles.css'
 import * as userActionCreators from 'redux/modules/users'
@@ -39,6 +39,7 @@ const MainContainer = React.createClass({
     return this.props.isFetching === true
       ? null
       : <div className={container}>
+          <Header />
           <Navigation uid={this.props.uid} isAuthed={this.props.isAuthed} />
           <div className={innerContainer}>
             {this.props.children}

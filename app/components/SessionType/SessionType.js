@@ -21,14 +21,14 @@ renderField.propTypes = {
   meta: object,
 }
 
-const SessionType = (props, context) => {
+const SessionType = (props) => {
   const { handleSubmit, submitting } = props
   const onSubmit = (values) => {
     props.addAndHandleSessionType(values, props.studioId)
   }
   return (
-    <div className='col-xs-12 col-sm-8 col-sm-offset-2 main-content'>
-      <h3>{'Create A New Session Type'}</h3>
+    <div className='col-xs-12 col-sm-3 col-sm-offset-2 main-content'>
+      <h3>{'Add Session Type'}</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Field name='title' id='title' type='text'
                component={renderField} label='Title'/>
@@ -37,7 +37,7 @@ const SessionType = (props, context) => {
         <Field name='description' id='description' type='text'
                component={renderField} label='Description'/>
         <Field name='duration' id='duration' type='number'
-               component={renderField} label='Duration in minutes' />
+               component={renderField} label='Duration (minutes)' />
         <button type='submit' className='btn btn-primary' disabled={submitting}>{'Submit'}</button>
       </form>
     </div>
