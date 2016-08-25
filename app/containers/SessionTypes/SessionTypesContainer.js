@@ -22,9 +22,9 @@ const SessionTypesContainer = React.createClass({
   },
   componentDidMount () {
     console.log(this.props.lastUpdated)
-    //if (staleSessionTypes(this.props.lastUpdated)) {
-      this.props.fetchAndHandleSessionTypes(this.props.studioId)
-    //}
+    // if (staleSessionTypes(this.props.lastUpdated)) {
+    this.props.fetchAndHandleSessionTypes(this.props.studioId)
+    // }
   },
   render () {
     return (

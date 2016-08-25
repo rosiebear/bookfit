@@ -1,25 +1,25 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes} from 'react'
 
 const GoogleAutocomplete = React.createClass({
   propTypes: {
     onPlaceSelected: PropTypes.func,
   },
-  onSelected() {
+  onSelected () {
     if (this.props.onPlaceSelected) {
-      this.props.onPlaceSelected(this.autocomplete.getPlace());
+      this.props.onPlaceSelected(this.autocomplete.getPlace())
     }
   },
-  componentDidMount() {
+  componentDidMount () {
     this.autocomplete = new google.maps.places.Autocomplete(this.refs.input, {
       types: ['geocode'],
-    });
-    this.autocomplete.addListener('place_changed', this.onSelected);
+    })
+    this.autocomplete.addListener('place_changed', this.onSelected)
   },
-  render() {
+  render () {
     return (
-      <input className="form-control" ref="input" />
+      <input className='form-control' ref='input' />
     )
-  }
+  },
 })
 
 export default GoogleAutocomplete

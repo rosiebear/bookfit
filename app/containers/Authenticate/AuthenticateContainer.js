@@ -17,8 +17,8 @@ const AuthenticateContainer = React.createClass({
     e.preventDefault()
     this.props.fetchAndHandleAuthedUser()
       .then((user) => {
-            this.context.router.replace(`userstudios/${user.uid}`)
-        }
+        this.context.router.replace(`userstudios/${user.uid}`)
+      }
       )
   },
   render () {

@@ -104,11 +104,11 @@ export default function usersStudios (state = initialState, action) {
       return typeof state[action.uid] === 'undefined'
         ? state
         : {
-        ...state,
-        isFetching: false,
-        error: '',
-        [action.uid]: usersStudio(state[action.uid], action),
-      }
+          ...state,
+          isFetching: false,
+          error: '',
+          [action.uid]: usersStudio(state[action.uid], action),
+        }
     default :
       return state
   }
