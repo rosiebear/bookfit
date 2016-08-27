@@ -9,6 +9,7 @@ import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
 import {reducer as formReducer} from 'redux-form'
 import * as reducers from 'redux/modules'
 import { hashHistory } from 'react-router'
+import 'sharedStyles/bootstrap.css'
 
 const store = createStore(combineReducers({...reducers, routing: routerReducer, form: formReducer}), compose(
   applyMiddleware(thunk),
