@@ -8,7 +8,8 @@ const Map = React.createClass({
   },
   getInitialState () {
     return {
-      directionsDisplay: new google.maps.DirectionsRenderer
+      directionsDisplay: new google.maps.DirectionsRenderer,
+      directionsService: new google.maps.DirectionsService,
     }
   },
 
@@ -16,9 +17,8 @@ const Map = React.createClass({
     this.initMap()
   },
 
-  componentWillUpdate (props, newprops) {
-    console.log(props, newprops)
-    this.route(props.from, props.to)
+  componentWillUpdate (props) {
+    this.route(props.origin, props.destination, this.state.directionsService, this.state.directionsDisplay)
   },
 
   initMap () {
@@ -27,12 +27,11 @@ const Map = React.createClass({
       center: { lat: 51.4749992, lng: -0.24525840000001153},
       zoom: 13,
     })
+    this.state.directionsDisplay = new google.maps.DirectionsRenderer
     this.state.directionsDisplay.setMap(this.map)
   },
 
-  route (originPlaceId, destinationPlaceId) {
-    console.log(originPlaceId, destinationPlaceId)
-    let directionsService = new google.maps.DirectionsService
+  route (originPlaceId, destinationPlaceId, directionsService, directionsDisplay) {
     if (!originPlaceId || !destinationPlaceId) {
       return
     }
@@ -40,11 +39,11 @@ const Map = React.createClass({
       origin: { 'placeId': originPlaceId },
       destination: { 'placeId': destinationPlaceId },
       travelMode: 'DRIVING',
-    }, function (response, status) {
+    }, (response, status) => {
       if (status === 'OK') {
-        this.state.directionsDisplay.setDirections(response)
+        directionsDisplay.setDirections(response)
       } else {
-        window.alert('Directions request failed due to ' + status);
+        window.alert('Directions request failed due to ' + status)
       }
     })
   },

@@ -1,6 +1,7 @@
 export MainContainer from './Main/MainContainer'
 export StudioNewContainer from './StudioNew/StudioNewContainer'
 export HomeContainer from './Home/HomeContainer'
+export JourneyContainer from './Journey/Journey'
 export AuthenticateContainer from './Authenticate/AuthenticateContainer'
 export LogoutContainer from './Logout/LogoutContainer'
 export SessionTypeContainer from './SessionType/SessionTypeContainer'

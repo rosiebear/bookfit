@@ -1,5 +1,6 @@
 export Header from './Header/Header'
 export Home from './Home/Home'
+export Journey from './Journey/Journey'
 export Navigation from './Navigation/Navigation'
 export Authenticate from './Authenticate/Authenticate'
 export StudioNew from './StudioNew/StudioNew'
